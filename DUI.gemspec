@@ -8,8 +8,9 @@ Gem::Specification.new do |s|
   s.authors     = ["Darren Cauthon"]
   s.email       = ["darren@cauthon.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Easier syncing with Delete - Update - Insert}
+  s.description = %q{This gem provides a small API for comparing two datasets, 
+                     for determining what records should be deleted, updated, or inserted.}
 
   s.rubyforge_project = "DUI"
 
