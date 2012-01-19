@@ -1,5 +1,5 @@
 require "DUI/version"
+require "DUI/matcher"
 
 module DUI
-  # Your code goes here...
 end
