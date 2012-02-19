@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe "Matcher" do
   before do
@@ -27,6 +27,32 @@ describe "Matcher" do
         assert_equal 0, @matcher.records_to_insert.count
       end
     end
+
+    describe "and it is given one new record" do
+      before do
+        @matcher.new_data = [TestProduct.new(1)]
+      end
     
+      it "should have one records to insert" do
+        assert_equal 1, @matcher.records_to_insert.count
+      end
+
+      it "should return the record in the new data" do
+        @matcher.new_data.each do |x|
+          assert_equal true, @matcher.records_to_insert.include?(x)
+        end
+      end
+    end
+    
+  end
+
+  class TestProduct
+
+    attr_accessor :id
+
+    def initialize(id)
+      @id = id
+    end
+
   end
 end

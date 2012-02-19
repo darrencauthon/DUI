@@ -12,7 +12,7 @@ module DUI
     end
 
     def records_to_insert
-      []
+      @new_data
     end
   end
 end
