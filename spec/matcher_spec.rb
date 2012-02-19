@@ -5,13 +5,27 @@ describe "Matcher" do
     @matcher = DUI::Matcher.new
   end
 
-  describe "when given no data" do
+  describe "when there is no existing data" do
     before do
-      @result = @matcher.match [], []
+      @matcher.current_data = []
     end
   
-    it "blah" do
-      @result.empty?.must_equal true  
+    describe "and it is given no data" do
+      before do
+        @matcher.new_data = []
+      end
+
+      it "should have no records to delete" do
+        assert_equal 0, @matcher.records_to_delete.count
+      end
+
+      it "should have no records to update" do
+        assert_equal 0, @matcher.records_to_update.count
+      end
+
+      it "should have no records to insert" do
+        assert_equal 0, @matcher.records_to_insert.count
+      end
     end
     
   end
