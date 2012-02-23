@@ -48,7 +48,7 @@ describe "Matcher" do
       end
 
       it "should return the new record as a record to insert" do
-        @results.new_data.each do |x|
+        @matcher.new_data.each do |x|
           assert_equal true, @results.records_to_insert.include?(x)
         end
       end
@@ -71,7 +71,7 @@ describe "Matcher" do
       end
 
       it "should return the current record as a record to delete" do
-        @results.current_data.each do |x|
+        @matcher.current_data.each do |x|
           assert_equal true, @results.records_to_delete.include?(x)
         end
       end
