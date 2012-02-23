@@ -19,6 +19,10 @@ module DUI
       records
     end
 
+    def execute
+      self
+    end
+
     def records_to_insert
       records = []
       @new_data.each do |n|
