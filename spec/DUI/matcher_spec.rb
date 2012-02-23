@@ -30,7 +30,7 @@ describe "Matcher" do
 
     describe "and it is given one new record" do
       before do
-        @matcher.new_data = [new_record(1)]
+        @matcher.new_data = [new_record_with_id(1)]
       end
     
       it "should have no records to delete" do
@@ -55,7 +55,7 @@ describe "Matcher" do
 
   describe "when there is one existing record" do
     before do
-      @matcher.current_data = [new_record(3)]
+      @matcher.current_data = [new_record_with_id(3)]
     end
   
     describe "and it is given no new data" do
@@ -84,7 +84,7 @@ describe "Matcher" do
 
     describe "and it is given the same record" do
       before do
-        @matcher.new_data = [new_record(3)]
+        @matcher.new_data = [new_record_with_id(3)]
       end
     
       it "should have no records to delete" do
@@ -106,7 +106,7 @@ describe "Matcher" do
 
     describe "and it is given a different record" do
       before do
-        @matcher.new_data = [new_record(5)]
+        @matcher.new_data = [new_record_with_id(5)]
       end
     
       it "should have no records to delete" do
@@ -132,7 +132,7 @@ describe "Matcher" do
 
     describe "and it is given the existing record and the same record" do
       before do
-        @matcher.new_data = [new_record(3), new_record(5)]
+        @matcher.new_data = [new_record_with_id(3), new_record_with_id(5)]
       end
     
       it "should have no records to delete" do
@@ -158,7 +158,7 @@ describe "Matcher" do
 
     describe "when there are two existing records" do
       before do
-        @matcher.current_data = [new_record(7), new_record(8)]
+        @matcher.current_data = [new_record_with_id(7), new_record_with_id(8)]
       end
     
       describe "and no new data is passed" do
@@ -181,7 +181,7 @@ describe "Matcher" do
 
       describe "and both existing records are passed" do
         before do
-          @matcher.new_data = [new_record(8), new_record(7)]
+          @matcher.new_data = [new_record_with_id(8), new_record_with_id(7)]
         end
 
         it "should return 0 records to delete" do
@@ -205,7 +205,7 @@ describe "Matcher" do
     end
   end
 
-  def new_record(id)
+  def new_record_with_id(id)
     Hashie::Mash.new :id => id
   end
 
