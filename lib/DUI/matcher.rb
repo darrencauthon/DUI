@@ -4,7 +4,7 @@ module DUI
     attr_accessor :current_data, :new_data
 
     def initialize
-      @compare_method = Proc.new{|c, n| c.id == n.id }
+      @compare_method = Proc.new {|c, n| c.id == n.id }
     end
 
     def execute
@@ -16,15 +16,15 @@ module DUI
     private 
 
     def get_records_to_insert
-      return @new_data.select{|n| @current_data.select{|c| @compare_method.call(c, n) }.count == 0 }
+      return @new_data.select {|n| @current_data.select {|c| @compare_method.call(c, n) }.count == 0 }
     end
 
     def get_records_to_delete
-      return @current_data.select{|c| @new_data.select{|n| @compare_method.call(c, n) }.count == 0 }
+      return @current_data.select {|c| @new_data.select {|n| @compare_method.call(c, n) }.count == 0 }
     end
 
     def get_records_to_update
-      @current_data.select{|c| @new_data.select{|n| @compare_method.call(c, n) }.count == 1}
+      @current_data.select {|c| @new_data.select {|n| @compare_method.call(c, n) }.count == 1}
     end
   end
 end
