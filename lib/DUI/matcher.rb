@@ -4,7 +4,7 @@ module DUI
     attr_accessor :current_data, :new_data
 
     def initialize
-      @compare_method = Proc.new {|c, n| c.id == n.id }
+      @compare_method = Proc.new {|current_record, new_record| current_record.id == new_record.id }
     end
 
     def execute
