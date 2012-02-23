@@ -4,10 +4,10 @@ source "http://rubygems.org"
 gemspec
 
 gem 'minitest'
+gem 'hashie'
 
 group :development do
   gem 'guard'
   gem 'guard-minitest', :git => 'git://github.com/aspiers/guard-minitest.git'
   gem 'ruby_gntp'
-  gem 'hashie'
 end

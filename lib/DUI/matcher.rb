@@ -4,11 +4,11 @@ module DUI
     attr_accessor :current_data, :new_data
 
     def execute
-      results = MatcherResults.new
-      results.records_to_insert = get_records_to_insert
-      results.records_to_update = get_records_to_update
-      results.records_to_delete = get_records_to_delete
-      results
+      MatcherResult.new({
+        :records_to_insert => get_records_to_insert
+        :records_to_update => get_records_to_update
+        :records_to_delete => get_records_to_delete
+      })
     end
 
     private 
