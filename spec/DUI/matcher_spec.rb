@@ -205,14 +205,10 @@ describe "Matcher" do
     end
   end
 
-
-  class TestProduct
-
-    attr_accessor :id
-
+  class TestProduct < Hashie::Mash
     def initialize(id)
-      @id = id
+      self[:id] = id
     end
-
   end
+
 end
