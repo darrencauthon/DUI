@@ -4,18 +4,19 @@ module DUI
     attr_accessor :current_data, :new_data
 
     def records_to_delete
+      records = []
       @current_data.each do |c|
-        return [] if @new_data.select{|n| c.id == n.id}.count == 1
+        records << c unless @new_data.select{|n| c.id == n.id}.count == 1
       end
-      return @current_data if @new_data 
-      []
+      records
     end
 
     def records_to_update
+      records = []
       @current_data.each do |c|
-        return [c] if @new_data.select{|n| c.id == n.id}.count == 1
+        records << c if @new_data.select{|n| c.id == n.id}.count == 1
       end
-      []
+      records
     end
 
     def records_to_insert

@@ -51,7 +51,6 @@ describe "Matcher" do
         end
       end
     end
-    
   end
 
   describe "when there is one existing record" do
@@ -156,8 +155,56 @@ describe "Matcher" do
         assert_equal 1, @matcher.records_to_insert.select{|x| x.id == 5}.count  
       end
     end
+
+    describe "when there are two existing records" do
+      before do
+        @matcher.current_data = [TestProduct.new(7), TestProduct.new(8)]
+      end
     
+      describe "and no new data is passed" do
+        before do
+          @matcher.new_data = []
+        end
+
+        it "should return 2 records to delete" do
+          assert_equal 2, @matcher.records_to_delete.count
+        end
+
+        it "should return 0 records to update" do
+          assert_equal 0, @matcher.records_to_update.count
+        end
+
+        it "should return 0 records to insert" do
+            assert_equal 0, @matcher.records_to_insert.count
+        end
+      end
+
+      describe "and both existing records are passed" do
+        before do
+          @matcher.new_data = [TestProduct.new(8), TestProduct.new(7)]
+        end
+
+        it "should return 0 records to delete" do
+          assert_equal 0, @matcher.records_to_delete.count  
+        end
+
+        it "should return 2 records to update" do
+            assert_equal 2, @matcher.records_to_update.count 
+        end
+
+        it "should return both records as ready for update" do
+          assert_equal 1, @matcher.records_to_update.select{|x|x.id == 8}.count  
+          assert_equal 1, @matcher.records_to_update.select{|x|x.id == 7}.count  
+        end
+
+        it "should return no records for insertion" do
+          assert_equal 0, @matcher.records_to_insert.count  
+        end
+      end
+
+    end
   end
+
 
   class TestProduct
 
