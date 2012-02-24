@@ -215,7 +215,7 @@ end
 
 describe "Matcher, but with email instead of id" do
   before do
-    @matcher = DUI::Matcher.new(Proc.new{|c, n| c.email == n.email})
+    @matcher = DUI::Matcher.new {|c, n| c.email == n.email}
   end
 
   describe "when there are two existing records" do
