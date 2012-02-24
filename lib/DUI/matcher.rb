@@ -2,8 +2,8 @@ module DUI
 
   class Matcher
 
-    def initialize
-      @compare_method = Proc.new {|c, n| c.id == n.id }
+    def initialize(compare_method = Proc.new {|c, n| c.id == n.id })
+      @compare_method = compare_method
     end
 
     def execute(current_data, new_data)

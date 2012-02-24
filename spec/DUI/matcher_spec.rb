@@ -209,12 +209,42 @@ describe "Matcher" do
           assert_equal 0, @results.records_to_insert.count  
         end
       end
-
     end
   end
+end
 
-  def new_record_with_id(id)
-    Hashie::Mash.new :id => id
+describe "Matcher, but with email instead of id" do
+  before do
+    @matcher = DUI::Matcher.new(Proc.new{|c, n| c.email == n.email})
   end
 
+  describe "when there are two existing records" do
+    before do
+      @current_data = [new_record_with_id_and_email(7, "one@test.com"), new_record_with_id_and_email(8, "two@test.com")]
+    end
+
+    describe "and both existing records are passed" do
+      before do
+        @new_data = [new_record_with_id_and_email(88, "two@test.com"), new_record_with_id_and_email(77, "one@test.com")]
+        @results = @matcher.execute @current_data, @new_data
+      end
+
+      it "should return 0 records to delete" do
+        assert_equal 0, @results.records_to_delete.count  
+      end
+
+      it "should return 2 records to update" do
+          assert_equal 2, @results.records_to_update.count 
+      end
+
+      it "should return both records as ready for update" do
+        assert_equal 1, @results.records_to_update.select{|x|x.email == "one@test.com"}.count  
+        assert_equal 1, @results.records_to_update.select{|x|x.email == "two@test.com"}.count  
+      end
+
+      it "should return no records for insertion" do
+        assert_equal 0, @results.records_to_insert.count  
+      end
+    end
+  end
 end
