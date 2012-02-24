@@ -7,13 +7,13 @@ describe "Matcher" do
 
   describe "when there is no existing data" do
     before do
-      @matcher.current_data = []
+      @current_data = []
     end
   
     describe "and it is given no data" do
       before do
-        @matcher.new_data = []
-        @results = @matcher.execute
+        @new_data = []
+        @results = @matcher.execute @current_data, @new_data
       end
 
       it "should have no records to delete" do
@@ -31,8 +31,8 @@ describe "Matcher" do
 
     describe "and it is given one new record" do
       before do
-        @matcher.new_data = [new_record_with_id(1)]
-        @results = @matcher.execute
+        @new_data = [new_record_with_id(1)]
+        @results = @matcher.execute @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -48,7 +48,7 @@ describe "Matcher" do
       end
 
       it "should return the new record as a record to insert" do
-        @matcher.new_data.each do |x|
+        @new_data.each do |x|
           assert_equal true, @results.records_to_insert.include?(x)
         end
       end
@@ -57,13 +57,13 @@ describe "Matcher" do
 
   describe "when there is one existing record" do
     before do
-      @matcher.current_data = [new_record_with_id(3)]
+      @current_data = [new_record_with_id(3)]
     end
   
     describe "and it is given no new data" do
       before do
-        @matcher.new_data = []
-        @results = @matcher.execute
+        @new_data = []
+        @results = @matcher.execute @current_data, @new_data
       end
 
       it "should have one records to delete" do
@@ -71,7 +71,7 @@ describe "Matcher" do
       end
 
       it "should return the current record as a record to delete" do
-        @matcher.current_data.each do |x|
+        @current_data.each do |x|
           assert_equal true, @results.records_to_delete.include?(x)
         end
       end
@@ -87,8 +87,8 @@ describe "Matcher" do
 
     describe "and it is given the same record" do
       before do
-        @matcher.new_data = [new_record_with_id(3)]
-        @results = @matcher.execute
+        @new_data = [new_record_with_id(3)]
+        @results = @matcher.execute @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -110,8 +110,8 @@ describe "Matcher" do
 
     describe "and it is given a different record" do
       before do
-        @matcher.new_data = [new_record_with_id(5)]
-        @results = @matcher.execute
+        @new_data = [new_record_with_id(5)]
+        @results = @matcher.execute @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -137,8 +137,8 @@ describe "Matcher" do
 
     describe "and it is given the existing record and the same record" do
       before do
-        @matcher.new_data = [new_record_with_id(3), new_record_with_id(5)]
-        @results = @matcher.execute
+        @new_data = [new_record_with_id(3), new_record_with_id(5)]
+        @results = @matcher.execute @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -164,13 +164,13 @@ describe "Matcher" do
 
     describe "when there are two existing records" do
       before do
-        @matcher.current_data = [new_record_with_id(7), new_record_with_id(8)]
+        @current_data = [new_record_with_id(7), new_record_with_id(8)]
       end
     
       describe "and no new data is passed" do
         before do
-          @matcher.new_data = []
-          @results = @matcher.execute
+          @new_data = []
+          @results = @matcher.execute @current_data, @new_data
         end
 
         it "should return 2 records to delete" do
@@ -188,8 +188,8 @@ describe "Matcher" do
 
       describe "and both existing records are passed" do
         before do
-          @matcher.new_data = [new_record_with_id(8), new_record_with_id(7)]
-          @results = @matcher.execute
+          @new_data = [new_record_with_id(8), new_record_with_id(7)]
+          @results = @matcher.execute @current_data, @new_data
         end
 
         it "should return 0 records to delete" do
