@@ -13,7 +13,7 @@ describe "Matcher" do
     describe "and it is given no data" do
       before do
         @new_data = []
-        @results = @matcher.execute @current_data, @new_data
+        @results = @matcher.get_results @current_data, @new_data
       end
 
       it "should have no records to delete" do
@@ -32,7 +32,7 @@ describe "Matcher" do
     describe "and it is given one new record" do
       before do
         @new_data = [new_record_with_id(1)]
-        @results = @matcher.execute @current_data, @new_data
+        @results = @matcher.get_results @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -63,7 +63,7 @@ describe "Matcher" do
     describe "and it is given no new data" do
       before do
         @new_data = []
-        @results = @matcher.execute @current_data, @new_data
+        @results = @matcher.get_results @current_data, @new_data
       end
 
       it "should have one records to delete" do
@@ -88,7 +88,7 @@ describe "Matcher" do
     describe "and it is given the same record" do
       before do
         @new_data = [new_record_with_id(3)]
-        @results = @matcher.execute @current_data, @new_data
+        @results = @matcher.get_results @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -111,7 +111,7 @@ describe "Matcher" do
     describe "and it is given a different record" do
       before do
         @new_data = [new_record_with_id(5)]
-        @results = @matcher.execute @current_data, @new_data
+        @results = @matcher.get_results @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -138,7 +138,7 @@ describe "Matcher" do
     describe "and it is given the existing record and the same record" do
       before do
         @new_data = [new_record_with_id(3), new_record_with_id(5)]
-        @results = @matcher.execute @current_data, @new_data
+        @results = @matcher.get_results @current_data, @new_data
       end
     
       it "should have no records to delete" do
@@ -170,7 +170,7 @@ describe "Matcher" do
       describe "and no new data is passed" do
         before do
           @new_data = []
-          @results = @matcher.execute @current_data, @new_data
+          @results = @matcher.get_results @current_data, @new_data
         end
 
         it "should return 2 records to delete" do
@@ -189,7 +189,7 @@ describe "Matcher" do
       describe "and both existing records are passed" do
         before do
           @new_data = [new_record_with_id(8), new_record_with_id(7)]
-          @results = @matcher.execute @current_data, @new_data
+          @results = @matcher.get_results @current_data, @new_data
         end
 
         it "should return 0 records to delete" do
@@ -226,7 +226,7 @@ describe "Matcher, but with email instead of id" do
     describe "and both existing records are passed" do
       before do
         @new_data = [new_record_with_id_and_email(88, "two@test.com"), new_record_with_id_and_email(77, "one@test.com")]
-        @results = @matcher.execute @current_data, @new_data
+        @results = @matcher.get_results @current_data, @new_data
       end
 
       it "should return 0 records to delete" do
