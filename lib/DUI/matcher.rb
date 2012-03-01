@@ -8,7 +8,7 @@ module DUI
 
     def get_results(current_data, new_data)
       results = get_the_results_of_the_delete_and_update_process(current_data, new_data) 
-      results.records_to_insert = get_records_to_insert(results.records_to_update.map{|u| u.current}, new_data)
+      results.records_to_insert = get_records_to_insert(results, new_data)
       results
     end
 
@@ -16,7 +16,7 @@ module DUI
 
     def get_the_results_of_the_delete_and_update_process(current_data, new_data)
       results = an_object_with(:records_to_delete => [], :records_to_update => [])
-      all_current_data_with_matches_in_new_data(current_data, new_data).each do |match| 
+      all_current_data_with_possible_matches_in_new_data(current_data, new_data).each do |match| 
         if match.current_not_found_in_new
           results.records_to_delete << match.current
         else
@@ -26,7 +26,7 @@ module DUI
       results
     end
 
-    def all_current_data_with_matches_in_new_data(current_data, new_data)
+    def all_current_data_with_possible_matches_in_new_data(current_data, new_data)
       current_data.map do |c| 
         an_object_with({:current => c}) do |result|
           result.new = new_data.select {|n| @compare_method.call(c, n) }.first
@@ -35,8 +35,9 @@ module DUI
       end
     end
 
-    def get_records_to_insert(current_data, new_data)
-      new_data.select {|n| current_data.select {|c| @compare_method.call(c, n) }.count == 0 }
+    def get_records_to_insert(results, new_data)
+      current_records = results.records_to_update.map{|u| u.current}
+      new_data.select {|n| current_records.select {|c| @compare_method.call(c, n) }.count == 0 }
     end
 
     def an_object_with(hash)
