@@ -7,19 +7,25 @@ module DUI
     end
 
     def get_results(current_data, new_data)
-      records_to_delete = []
-      records_to_update = []
-      current_data.each do |c| 
-        a_match_in_the_new_data = new_data.select {|n| @compare_method.call(c, n) }.first
-        if !a_match_in_the_new_data.nil?
-          records_to_update << Hashie::Mash.new({:current => c, :new => a_match_in_the_new_data})
+      results = Hashie::Mash.new(:records_to_delete => [], :records_to_update => [])
+      all_current_data_with_matches_in_new_data(current_data, new_data).each do |match| 
+        if match.no_match_found_in_new_data
+          results.records_to_delete << match.current
         else
-          records_to_delete << c
+          results.records_to_update << match 
         end
       end
-      Hashie::Mash.new(:records_to_delete => records_to_delete, 
-                       :records_to_update => records_to_update,
-                       :records_to_insert => get_records_to_insert(records_to_update.map{|u| u.current}, new_data))
+      results.records_to_insert = get_records_to_insert(results.records_to_update.map{|u| u.current}, new_data)
+      results
+    end
+
+    def all_current_data_with_matches_in_new_data(current_data, new_data)
+      current_data.map do |c| 
+        match = Hashie::Mash.new({:current => c})
+        match.new = new_data.select {|n| @compare_method.call(c, n) }.first
+        match.no_match_found_in_new_data = match.nil?
+        match
+      end
     end
 
     def get_records_to_insert(current_data, new_data)
