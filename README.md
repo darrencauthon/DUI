@@ -22,6 +22,7 @@ Two things:
 2.) I've seen a number of imports that start with an call to **destroy_all**, so an import is essentially a DELETE EVERYTHING, THEN IMPORT EVERYTHING AS NEW process.  Yikes.  After having to fix a few issues where the system would fail *after* the data was deleted but *before* the import was finished, I had to take action.
 
 Simple Example:
+
 ```ruby
 require 'DUI'
 require 'awesome_print'
