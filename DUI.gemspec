@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = DUI::VERSION
   s.authors     = ["Darren Cauthon"]
   s.email       = ["darren@cauthon.com"]
-  s.homepage    = ""
+  s.homepage    = "http://www.github.com/darrencauthon/DUI"
   s.summary     = %q{Easier syncing with Delete - Update - Insert}
   s.description = %q{This gem provides a small API for comparing two datasets, 
                      for determining what records should be deleted, updated, or inserted.}
@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+  s.add_development_dependency "minitest"
+  s.add_runtime_dependency "hashie"
 end
