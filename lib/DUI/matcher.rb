@@ -23,7 +23,7 @@ module DUI
       current_data.map do |c| 
         match = Hashie::Mash.new({:current => c})
         match.new = new_data.select {|n| @compare_method.call(c, n) }.first
-        match.no_match_found_in_new_data = match.nil?
+        match.no_match_found_in_new_data = match.new.nil?
         match
       end
     end
