@@ -10,13 +10,11 @@ module DUI
       records_to_delete = []
       records_to_update = []
       current_data.each do |c| 
-        if new_data.select {|n| @compare_method.call(c, n) }.count == 0
-          records_to_delete << c
+        a_match_in_the_new_data = new_data.select {|n| @compare_method.call(c, n) }.first
+        if !a_match_in_the_new_data.nil?
+          records_to_update << Hashie::Mash.new({:current => c, :new => a_match_in_the_new_data})
         else
-          record_to_update = Hashie::Mash.new
-          record_to_update.current = c
-          record_to_update.new = new_data.select {|n| @compare_method.call(c, n) }.first
-          records_to_update << record_to_update 
+          records_to_delete << c
         end
       end
       Hashie::Mash.new(:records_to_delete => records_to_delete, 
