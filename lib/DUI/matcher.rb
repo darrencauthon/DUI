@@ -7,27 +7,25 @@ module DUI
     end
 
     def get_results(current_data, new_data)
-      Hashie::Mash.new(:records_to_delete => get_records_to_delete(current_data, new_data), 
-                       :records_to_update => get_records_to_update(current_data, new_data),
-                       :records_to_insert => get_records_to_insert(current_data, new_data))
+      records_to_delete = []
+      records_to_update = []
+      current_data.each do |c| 
+        if new_data.select {|n| @compare_method.call(c, n) }.count == 0
+          records_to_delete << c
+        else
+          record_to_update = Hashie::Mash.new
+          record_to_update.current = c
+          record_to_update.new = new_data.select {|n| @compare_method.call(c, n) }.first
+          records_to_update << record_to_update 
+        end
+      end
+      Hashie::Mash.new(:records_to_delete => records_to_delete, 
+                       :records_to_update => records_to_update,
+                       :records_to_insert => get_records_to_insert(records_to_update.map{|u| u.current}, new_data))
     end
 
     def get_records_to_insert(current_data, new_data)
-      return new_data.select {|n| current_data.select {|c| @compare_method.call(c, n) }.count == 0 }
-    end
-
-    def get_records_to_delete(current_data, new_data)
-      return current_data.select {|c| new_data.select {|n| @compare_method.call(c, n) }.count == 0 }
-    end
-
-    def get_records_to_update(current_data, new_data)
-      updates = current_data.select {|c| new_data.select {|n| @compare_method.call(c, n) }.count == 1}
-      updates.map do |c|
-        mash = Hashie::Mash.new
-        mash.current = c
-        mash.new = new_data.select{|n| @compare_method.call(c, n)}.first
-        mash
-      end
+      new_data.select {|n| current_data.select {|c| @compare_method.call(c, n) }.count == 0 }
     end
   end
 end
