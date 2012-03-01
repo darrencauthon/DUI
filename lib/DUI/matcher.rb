@@ -28,10 +28,10 @@ module DUI
 
     def all_current_data_with_matches_in_new_data(current_data, new_data)
       current_data.map do |c| 
-        match = an_object_with({:current => c})
-        match.new = new_data.select {|n| @compare_method.call(c, n) }.first
-        match.current_not_found_in_new = match.new.nil?
-        match
+        an_object_with({:current => c}) do |result|
+          result.new = new_data.select {|n| @compare_method.call(c, n) }.first
+          result.current_not_found_in_new = result.new.nil?
+        end
       end
     end
 
@@ -40,7 +40,9 @@ module DUI
     end
 
     def an_object_with(hash)
-      Hashie::Mash.new(hash)
+      the_object = Hashie::Mash.new(hash)
+      yield the_object if block_given?
+      the_object
     end
   end
 end
