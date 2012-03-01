@@ -69,6 +69,7 @@ ap current_data
 
 ```
 Here's the final result:
+
 ```ruby
 [
     [0] #<Person:0x7ffae4937920
