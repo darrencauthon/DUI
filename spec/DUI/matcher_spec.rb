@@ -100,7 +100,8 @@ describe "Matcher" do
       end
 
       it "should return the existing record as a record to update" do
-        assert_equal 1, @results.records_to_update.select{|x| x.id == 3}.count
+        assert_equal 1, @results.records_to_update.select{|x| x.current.id == 3}.count
+        assert_equal 1, @results.records_to_update.select{|x| x.new.id == 3}.count
       end
 
       it "should have no records to insert" do
@@ -150,7 +151,8 @@ describe "Matcher" do
       end
 
       it "should return the existing record as a record to update" do
-        assert_equal 1, @results.records_to_update.select{|x| x.id == 3}.count
+        assert_equal 1, @results.records_to_update.select{|x| x.current.id == 3}.count
+        assert_equal 1, @results.records_to_update.select{|x| x.new.id == 3}.count
       end
 
       it "should have one records to insert" do
@@ -201,8 +203,10 @@ describe "Matcher" do
         end
 
         it "should return both records as ready for update" do
-          assert_equal 1, @results.records_to_update.select{|x|x.id == 8}.count  
-          assert_equal 1, @results.records_to_update.select{|x|x.id == 7}.count  
+          assert_equal 1, @results.records_to_update.select{|x|x.current.id == 8}.count  
+          assert_equal 1, @results.records_to_update.select{|x|x.current.id == 7}.count  
+          assert_equal 1, @results.records_to_update.select{|x|x.new.id == 8}.count  
+          assert_equal 1, @results.records_to_update.select{|x|x.new.id == 7}.count  
         end
 
         it "should return no records for insertion" do
@@ -238,8 +242,10 @@ describe "Matcher, but with email instead of id" do
       end
 
       it "should return both records as ready for update" do
-        assert_equal 1, @results.records_to_update.select{|x|x.email == "one@test.com"}.count  
-        assert_equal 1, @results.records_to_update.select{|x|x.email == "two@test.com"}.count  
+        assert_equal 1, @results.records_to_update.select{|x|x.current.email == "one@test.com"}.count  
+        assert_equal 1, @results.records_to_update.select{|x|x.current.email == "two@test.com"}.count  
+        assert_equal 1, @results.records_to_update.select{|x|x.new.email == "one@test.com"}.count  
+        assert_equal 1, @results.records_to_update.select{|x|x.new.email == "two@test.com"}.count  
       end
 
       it "should return no records for insertion" do

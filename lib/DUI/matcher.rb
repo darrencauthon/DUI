@@ -21,7 +21,13 @@ module DUI
     end
 
     def get_records_to_update(current_data, new_data)
-      current_data.select {|c| new_data.select {|n| @compare_method.call(c, n) }.count == 1}
+      updates = current_data.select {|c| new_data.select {|n| @compare_method.call(c, n) }.count == 1}
+      updates.map do |c|
+        mash = Hashie::Mash.new
+        mash.current = c
+        mash.new = new_data.select{|n| @compare_method.call(c, n)}.first
+        mash
+      end
     end
   end
 end
