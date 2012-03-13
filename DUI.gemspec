@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   s.add_development_dependency "minitest"
   s.add_runtime_dependency "hashie"
+  s.add_development_dependency "rake"
 end
