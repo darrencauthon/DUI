@@ -1,4 +1,4 @@
-#DUI
+#DUI [![Build Status](https://secure.travis-ci.org/darrencauthon/DUI.png?branch=master)](http://travis-ci.org/darrencauthon/DUI)
 ## Delete, Update, and Insert
 
 The purpose of this gem is to make it easy to compare two datasets to see what operations would be necessary to merge the new data into the old.
