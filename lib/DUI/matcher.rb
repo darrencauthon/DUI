@@ -3,7 +3,7 @@ module DUI
   class Matcher
 
     def initialize(&compare_method)
-      @compare_method = compare_method || Proc.new {|c, n| c.id == n.id }
+      @compare_method = compare_method || Proc.new { |c, n| c.id == n.id }
     end
 
     def get_results(current_data, new_data)
@@ -28,8 +28,8 @@ module DUI
 
     def all_current_data_with_possible_matches_in_new_data(current_data, new_data)
       current_data.map do |c| 
-        an_object_with({:current => c}) do |result|
-          result.new = new_data.select {|n| @compare_method.call(c, n) }.first
+        an_object_with( {:current => c} ) do |result|
+          result.new = new_data.select { |n| @compare_method.call(c, n) }.first
           result.current_not_found_in_new = result.new.nil?
         end
       end
@@ -37,7 +37,7 @@ module DUI
 
     def get_records_to_insert(results, new_data)
       current_records = results.records_to_update.map{|u| u.current}
-      new_data.select {|n| current_records.select {|c| @compare_method.call(c, n) }.count == 0 }
+      new_data.select { |n| current_records.select { |c| @compare_method.call(c, n) }.count == 0 }
     end
 
     def an_object_with(hash)
