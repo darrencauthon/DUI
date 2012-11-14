@@ -6,7 +6,9 @@ The purpose of this gem is to make it easy to compare two datasets to see what o
 Way back in my stored procedure days, we'd write this type of update by:
 
 1.) Deleting any current records that aren't in the new set,
+
 2.) Updating the current records with any matches in the new set, and
+
 3.) Inserting any new records into the current set.
 
 This gem helps to run this process by doing the comparison for you, giving you three sets of data that you can use to make the appropriate data changes.
