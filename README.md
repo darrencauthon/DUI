@@ -1,4 +1,4 @@
-#DUI [![Build Status](https://secure.travis-ci.org/darrencauthon/DUI.png?branch=master)](http://travis-ci.org/darrencauthon/DUI) [![Code Climate](https://codeclimate.com/github/darrencauthon/DUI.png)](https://codeclimate.com/github/darrencauthon/DUI)
+#DUI [![Build Status](https://secure.travis-ci.org/darrencauthon/DUI.png?branch=master)](http://travis-ci.org/darrencauthon/DUI) [![Code Climate](https://codeclimate.com/github/darrencauthon/DUI.png)](https://codeclimate.com/github/darrencauthon/DUI) <a href='https://coveralls.io/r/darrencauthon/DUI'><img src='https://coveralls.io/repos/darrencauthon/DUI/badge.png?branch=master' alt='Coverage Status' /></a>
 
 ## Delete, Update, and Insert
 
